@@ -28,6 +28,8 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="hiq-hG-NdX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="7EZ-pD-ib9"/>
+                    <constraint firstAttribute="bottom" secondItem="hiq-hG-NdX" secondAttribute="bottom" constant="10" id="8Xs-eE-LLa"/>
                     <constraint firstItem="hiq-hG-NdX" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="KgB-ia-rcY"/>
                     <constraint firstItem="hiq-hG-NdX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="UsW-Tw-mZB"/>
                     <constraint firstAttribute="trailingMargin" secondItem="hiq-hG-NdX" secondAttribute="trailing" id="f0g-bv-3Sn"/>

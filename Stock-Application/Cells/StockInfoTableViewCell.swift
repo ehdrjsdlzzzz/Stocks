@@ -44,6 +44,8 @@ class StockInfoTableViewCell: UITableViewCell {
         stockCodeLabel.text = nil
         currentPriceLabel.text = nil
         priceDiffLabel.text = nil
+        
+        selectionStyle = .none
     }
     
     override func prepareForReuse() {
@@ -52,4 +54,5 @@ class StockInfoTableViewCell: UITableViewCell {
         currentPriceLabel.text = nil
         priceDiffLabel.text = nil
     }
+    
 }
