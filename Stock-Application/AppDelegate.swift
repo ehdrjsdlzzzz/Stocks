@@ -12,8 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    static var shared: AppDelegate {
+        return UIApplication.shared.delegate as! AppDelegate
+    }
 
     let tabBarController = UITabBarController()
+    
+    var groupsViewController: GroupsViewController? {
+        return (tabBarController.viewControllers?[0] as? UINavigationController)?.topViewController as? GroupsViewController
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         

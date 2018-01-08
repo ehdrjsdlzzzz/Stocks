@@ -50,6 +50,7 @@ class StockViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.tableView.reloadData()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
     }
@@ -106,7 +107,7 @@ extension StockViewController: UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
-            return 4
+            return 5
         }else if section == 1 {
             return 3
         }else if section == 2 {
@@ -125,8 +126,8 @@ extension StockViewController: UITableViewDataSource{
                 return cell
             }else if indexPath.row == 1 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: StockChartTableViewCell.reuseableIdentifier, for: indexPath) as! StockChartTableViewCell
-                
                 cell.stock = stock
+                cell.accessoryType = .disclosureIndicator
                 return cell
             }else if indexPath.row == 2 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseableIdentifier, for: indexPath) as! TextFieldTableViewCell
@@ -136,14 +137,23 @@ extension StockViewController: UITableViewDataSource{
                 cell.textField.placeholder = "종목 보유수량"
                 cell.textField.isEnabled = true // 밑의 셀이 재사용될 경우 false이기 때문에 입력을 할 수 없다.
                 cell.textField.keyboardType = .numberPad
+                cell.accessoryType = .none
                 return cell
             }else if indexPath.row == 3{
                 let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseableIdentifier, for: indexPath) as! TextFieldTableViewCell
                 cell.label.text = "평가금액"
                 cell.textField.placeholder = "\(stock.value)"
                 cell.textField.isEnabled = false
+                cell.accessoryType = .none
                 return cell
-                
+            }else if indexPath.row == 4 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseableIdentifier, for: indexPath) as! TextFieldTableViewCell
+                cell.label?.text = "그룹"
+                cell.textField?.placeholder = "종목 그룹선택"
+                cell.textField?.text = stock.groupTitle
+                cell.textField?.isEnabled = false
+                cell.accessoryType = .disclosureIndicator
+                return cell
             }
         }else if indexPath.section == 1{
             var cell:UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseableIdentifier)
@@ -165,7 +175,6 @@ extension StockViewController: UITableViewDataSource{
         }else if indexPath.section == 2 {
             if indexPath.row == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: DeleteTableViewCell.reuseableIdentifier, for: indexPath) as! DeleteTableViewCell
-                
                 return cell
             }
         }
@@ -176,7 +185,14 @@ extension StockViewController: UITableViewDataSource{
 extension StockViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.section == 1{
+        if indexPath.section == 0{
+            if indexPath.row == 4 {
+                if let groups = AppDelegate.shared.groupsViewController?.groups {
+                    let selectGroupViewController = SelectGroupViewController(groups: groups, stock: stock)
+                    navigationController?.pushViewController(selectGroupViewController, animated: true)
+                }
+            }
+        }else if indexPath.section == 1{
             var urlString: String?
             if indexPath.row == 0 {
                 urlString = "http://finance.naver.com/item/main.nhn?code=\(stock.code)"
@@ -196,7 +212,7 @@ extension StockViewController: UITableViewDelegate{
                 alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
                     NotificationCenter.default.post(name: Stock.didDelete, object: self.stock)
-                    self.dismiss(animated: true, completion: nil)
+                    self.navigationController?.popViewController(animated: true)
                 }))
                 
                 present(alert, animated: true, completion: nil)

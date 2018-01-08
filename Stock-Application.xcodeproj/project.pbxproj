@@ -32,6 +32,8 @@
 		3ED4A213200332D7006F5B3B /* StockChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */; };
 		3ED4A214200332D7006F5B3B /* StockChartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */; };
 		3ED4A21C200385F1006F5B3B /* DeleteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A21B200385F1006F5B3B /* DeleteTableViewCell.swift */; };
+		3ED4A21F20039242006F5B3B /* SelectGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A21D20039242006F5B3B /* SelectGroupViewController.swift */; };
+		3ED4A22020039242006F5B3B /* SelectGroupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A21E20039242006F5B3B /* SelectGroupViewController.xib */; };
 		B4674EC62BAC38AE84F9FAE5 /* Pods_Stock_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE11EE391EA523FBB80E4BD5 /* Pods_Stock_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +65,8 @@
 		3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartTableViewCell.swift; sourceTree = "<group>"; };
 		3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockChartTableViewCell.xib; sourceTree = "<group>"; };
 		3ED4A21B200385F1006F5B3B /* DeleteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTableViewCell.swift; sourceTree = "<group>"; };
+		3ED4A21D20039242006F5B3B /* SelectGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupViewController.swift; sourceTree = "<group>"; };
+		3ED4A21E20039242006F5B3B /* SelectGroupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectGroupViewController.xib; sourceTree = "<group>"; };
 		B39D469DE348092E0AE2E592 /* Pods-Stock-Application.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stock-Application.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stock-Application/Pods-Stock-Application.release.xcconfig"; sourceTree = "<group>"; };
 		CE11EE391EA523FBB80E4BD5 /* Pods_Stock_Application.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stock_Application.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7373DB61B94A4A390531A59 /* Pods-Stock-Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stock-Application.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stock-Application/Pods-Stock-Application.debug.xcconfig"; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				3E762CC91FE4B45200E732D6 /* StocksViewController.xib */,
 				3ED4A20920032815006F5B3B /* StockViewController.swift */,
 				3ED4A20A20032815006F5B3B /* StockViewController.xib */,
+				3ED4A21D20039242006F5B3B /* SelectGroupViewController.swift */,
+				3ED4A21E20039242006F5B3B /* SelectGroupViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -247,6 +253,7 @@
 				3E47B4841FDADC4F005C44AB /* GroupsViewController.xib in Resources */,
 				3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */,
 				3ED4A210200329C7006F5B3B /* StockInfoTableViewCell.xib in Resources */,
+				3ED4A22020039242006F5B3B /* SelectGroupViewController.xib in Resources */,
 				3ED4A214200332D7006F5B3B /* StockChartTableViewCell.xib in Resources */,
 				3E47B48C1FDAE48C005C44AB /* TextFieldTableViewCell.xib in Resources */,
 				3E47B4881FDAE00B005C44AB /* EditGroupViewController.xib in Resources */,
@@ -332,6 +339,7 @@
 				3E47B47F1FDADBE2005C44AB /* Group.swift in Sources */,
 				3E369CF11FDC06B200CD94E8 /* UITableView+Stock.swift in Sources */,
 				3E762CCA1FE4B45200E732D6 /* StocksViewController.swift in Sources */,
+				3ED4A21F20039242006F5B3B /* SelectGroupViewController.swift in Sources */,
 				3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */,
 				3ED4A21C200385F1006F5B3B /* DeleteTableViewCell.swift in Sources */,
 				3E47B46C1FDAD9E9005C44AB /* AppDelegate.swift in Sources */,
