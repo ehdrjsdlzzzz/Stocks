@@ -31,7 +31,8 @@ class StockViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
-        
+        amountField?.delegate = self
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
         title = stock.name
         tableView.hideBottomSeparator()
 
@@ -41,11 +42,32 @@ class StockViewController: UIViewController {
         self.tableView.register(UINib(nibName: TextFieldTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: TextFieldTableViewCell.reuseableIdentifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveStock))
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+    }
+}
+
+// MARK: UITextFieldDelegate
+
+extension StockViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        amountField?.resignFirstResponder()
+        return true
     }
 }
 
 // MARK: Target-Action
 extension StockViewController{
+    
+    @objc func endEditing(){
+        amountField?.resignFirstResponder()
+    }
+    
     @objc func saveStock(){
         if let amountText = amountField?.text, let amount = Int(amountText) {
             amountField?.resignFirstResponder()
@@ -54,6 +76,22 @@ extension StockViewController{
             stock.amount = amount
             NotificationCenter.default.post(name: Stock.didUpdate, object: nil) // update Noti
             self.tableView.reloadData()
+        }
+    }
+    
+    @objc func keyboardWillShow(_ notification: Notification){
+        if UIDevice().userInterfaceIdiom == .phone {
+            if UIScreen.main.nativeBounds.height <= CGFloat(1136.0){
+                self.view.frame.origin.y = -150
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(_ notification: Notification){
+        if UIDevice().userInterfaceIdiom == .phone {
+            if UIScreen.main.nativeBounds.height <= CGFloat(1136.0){
+                self.view.frame.origin.y = 0
+            }
         }
     }
 }
@@ -77,6 +115,7 @@ extension StockViewController: UITableViewDataSource{
             let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldTableViewCell.reuseableIdentifier, for: indexPath) as! TextFieldTableViewCell
             amountField = cell.textField
             cell.label.text = "보유수량"
+            cell.textField.text = "\(stock.amount)"
             cell.textField.placeholder = "종목 보유수량"
             cell.textField.isEnabled = true // 밑의 셀이 재사용될 경우 false이기 때문에 입력을 할 수 없다.
             cell.textField.keyboardType = .numberPad
