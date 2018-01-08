@@ -33,6 +33,8 @@ class StockViewController: UIViewController {
         tableView.hideBottomSeparator()
 
         self.tableView.register(UINib(nibName: StockInfoTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: StockInfoTableViewCell.reuseableIdentifier)
+        self.tableView.register(UINib(nibName: StockChartTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: StockChartTableViewCell.reuseableIdentifier)
+        
     }
 }
 
@@ -44,6 +46,11 @@ extension StockViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: StockInfoTableViewCell.reuseableIdentifier, for: indexPath) as! StockInfoTableViewCell
+            cell.stock = stock
+            return cell
+        }else if indexPath.row == 1 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: StockChartTableViewCell.reuseableIdentifier, for: indexPath) as! StockChartTableViewCell
+            
             cell.stock = stock
             return cell
         }

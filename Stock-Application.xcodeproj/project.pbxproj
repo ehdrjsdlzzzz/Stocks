@@ -29,6 +29,8 @@
 		3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A20A20032815006F5B3B /* StockViewController.xib */; };
 		3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */; };
 		3ED4A210200329C7006F5B3B /* StockInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A20E200329C7006F5B3B /* StockInfoTableViewCell.xib */; };
+		3ED4A213200332D7006F5B3B /* StockChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */; };
+		3ED4A214200332D7006F5B3B /* StockChartTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */; };
 		B4674EC62BAC38AE84F9FAE5 /* Pods_Stock_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE11EE391EA523FBB80E4BD5 /* Pods_Stock_Application.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,8 @@
 		3ED4A20A20032815006F5B3B /* StockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockViewController.xib; sourceTree = "<group>"; };
 		3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoTableViewCell.swift; sourceTree = "<group>"; };
 		3ED4A20E200329C7006F5B3B /* StockInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockInfoTableViewCell.xib; sourceTree = "<group>"; };
+		3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockChartTableViewCell.swift; sourceTree = "<group>"; };
+		3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockChartTableViewCell.xib; sourceTree = "<group>"; };
 		B39D469DE348092E0AE2E592 /* Pods-Stock-Application.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stock-Application.release.xcconfig"; path = "Pods/Target Support Files/Pods-Stock-Application/Pods-Stock-Application.release.xcconfig"; sourceTree = "<group>"; };
 		CE11EE391EA523FBB80E4BD5 /* Pods_Stock_Application.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Stock_Application.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7373DB61B94A4A390531A59 /* Pods-Stock-Application.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Stock-Application.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Stock-Application/Pods-Stock-Application.debug.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 				3E4630FD1FE61E4D000AF14D /* StockTableViewCell.xib */,
 				3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */,
 				3ED4A20E200329C7006F5B3B /* StockInfoTableViewCell.xib */,
+				3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */,
+				3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -238,6 +244,7 @@
 				3E47B4841FDADC4F005C44AB /* GroupsViewController.xib in Resources */,
 				3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */,
 				3ED4A210200329C7006F5B3B /* StockInfoTableViewCell.xib in Resources */,
+				3ED4A214200332D7006F5B3B /* StockChartTableViewCell.xib in Resources */,
 				3E47B48C1FDAE48C005C44AB /* TextFieldTableViewCell.xib in Resources */,
 				3E47B4881FDAE00B005C44AB /* EditGroupViewController.xib in Resources */,
 				3E47B4731FDAD9E9005C44AB /* Assets.xcassets in Resources */,
@@ -317,6 +324,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E4630FE1FE61E4D000AF14D /* StockTableViewCell.swift in Sources */,
+				3ED4A213200332D7006F5B3B /* StockChartTableViewCell.swift in Sources */,
 				3E47B48F1FDAE5DD005C44AB /* NSObject+Stock.swift in Sources */,
 				3E47B47F1FDADBE2005C44AB /* Group.swift in Sources */,
 				3E369CF11FDC06B200CD94E8 /* UITableView+Stock.swift in Sources */,
