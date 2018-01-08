@@ -41,6 +41,8 @@ class EditGroupViewController: UIViewController {
         
         // Cell Register
         tableView.register(UINib.init(nibName: TextFieldTableViewCell.reuseableIdentifier, bundle: nil) , forCellReuseIdentifier: TextFieldTableViewCell.reuseableIdentifier)
+        
+        tableView.register(DeleteTableViewCell.self, forCellReuseIdentifier: DeleteTableViewCell.reuseableIdentifier)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -134,10 +136,7 @@ extension EditGroupViewController: UITableViewDataSource {
                 return cell
             }
         }else if indexPath.section == 1 {
-            let cell = UITableViewCell()
-            cell.textLabel?.text = "Remove"
-            cell.textLabel?.textColor = .red
-            cell.textLabel?.textAlignment = .center
+            let cell = tableView.dequeueReusableCell(withIdentifier: DeleteTableViewCell.reuseableIdentifier, for: indexPath) as! DeleteTableViewCell
             
             return cell
         }

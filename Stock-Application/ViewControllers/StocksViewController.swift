@@ -24,9 +24,18 @@ class StocksViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.titleView = segmentedControl
+    
         segmentedControl.selectedSegmentIndex = 1
         segmentedControl.addTarget(self, action: #selector(segmentedControlChanged), for: .valueChanged)
         title = "종목"
+        
+        if #available(iOS 10.0, *) {
+            stocksTableView.refreshControl = refreshControl
+        } else {
+            stocksTableView.addSubview(refreshControl)
+        }
+        
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
@@ -37,16 +46,9 @@ class StocksViewController: UIViewController {
         
         stocksTableView.register(UINib(nibName: StockTableViewCell.reuseableIdentifier, bundle:nil), forCellReuseIdentifier: StockTableViewCell.reuseableIdentifier)
         NotificationCenter.default.addObserver(self, selector: #selector(saveStocks), name: Stock.didUpdate, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(deleteStock(_:)), name: Stock.didDelete, object: nil)
         reloadStock()
         
-        if #available(iOS 10.0, *) {
-            stocksTableView.refreshControl = refreshControl
-        } else {
-            stocksTableView.addSubview(refreshControl)
-        }
-        
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Stock Data ...")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -60,7 +62,7 @@ class StocksViewController: UIViewController {
     }
 }
 
-// MARK: Additional method
+// MARK: Additional method (Data)
 
 extension StocksViewController  {
     @objc func saveStocks(){
@@ -71,6 +73,18 @@ extension StocksViewController  {
         if let data = UserDefaults.standard.object(forKey: "stocks") as? Data {
             stocks = try! PropertyListDecoder().decode([Stock].self, from: data)
         }
+    }
+    
+    @objc func deleteStock(_ notification: Notification){
+        guard let toDeleteStock = notification.object as? Stock else {return}
+        if let index = stocks.index(where: {
+            $0.name == toDeleteStock.name
+
+        }){
+            stocks.remove(at: index)
+        }
+        saveStocks()
+        stocksTableView.reloadData()
     }
 }
 
@@ -83,8 +97,9 @@ extension StocksViewController {
     @objc func refresh(){
         var updated = 0
         
-        SVProgressHUD.show()
-        
+        if !self.refreshControl.isRefreshing{
+            SVProgressHUD.show()
+        }
         for stock in stocks {
             self.parseStock(code: stock.code, success: { (updatedStock) in
                 stock.price = updatedStock.price
@@ -101,13 +116,12 @@ extension StocksViewController {
                 updated += 1
                 if updated == self.stocks.count {
                     SVProgressHUD.dismiss()
+                    self.refreshControl.endRefreshing()
                     self.saveStocks()
                     self.stocksTableView.reloadData()
                 }
             })
         }
-        
-        self.refreshControl.endRefreshing()
     }
     
     @objc func newStock(){

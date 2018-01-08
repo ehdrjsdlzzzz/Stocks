@@ -42,6 +42,7 @@ class StockViewController: UIViewController {
         self.tableView.register(UINib(nibName: StockChartTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: StockChartTableViewCell.reuseableIdentifier)
         
         self.tableView.register(UINib(nibName: TextFieldTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: TextFieldTableViewCell.reuseableIdentifier)
+        self.tableView.register(DeleteTableViewCell.self, forCellReuseIdentifier: DeleteTableViewCell.reuseableIdentifier)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveStock))
         
@@ -101,13 +102,16 @@ extension StockViewController{
 extension StockViewController: UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
+        return 3
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0{
             return 4
         }else if section == 1 {
             return 3
+        }else if section == 2 {
+            return 1;
+            
         }
         
         return 0;
@@ -158,6 +162,12 @@ extension StockViewController: UITableViewDataSource{
                 cell.textLabel?.text = "Bloomberg"
             }
             return cell
+        }else if indexPath.section == 2 {
+            if indexPath.row == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: DeleteTableViewCell.reuseableIdentifier, for: indexPath) as! DeleteTableViewCell
+                
+                return cell
+            }
         }
         return UITableViewCell()
     }
@@ -179,6 +189,17 @@ extension StockViewController: UITableViewDelegate{
             if let urlString = urlString, let url = URL(string: urlString) {
 //                UIApplication.shared.open(url, options: [:], completionHandler: nil) // 앱 밖의 브저우저
                 present(SFSafariViewController(url: url), animated: true, completion: nil)
+            }
+        }else if indexPath.section == 2{
+            if indexPath.row == 0 {
+                let alert = UIAlertController(title: "Warning", message: "정말 삭제하시겠습니까?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { _ in
+                    NotificationCenter.default.post(name: Stock.didDelete, object: self.stock)
+                    self.dismiss(animated: true, completion: nil)
+                }))
+                
+                present(alert, animated: true, completion: nil)
             }
         }
     }

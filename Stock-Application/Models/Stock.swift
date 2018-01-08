@@ -10,6 +10,7 @@ class Formatters {
 class Stock: Codable{
     
     static let didUpdate = Notification.Name(rawValue: "Stock.didUpdate")
+    static let didDelete = Notification.Name(rawValue: "Stock.didDelete")
     
     let name: String
     let code: String
