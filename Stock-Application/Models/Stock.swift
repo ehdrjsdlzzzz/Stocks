@@ -9,7 +9,7 @@ class Formatters {
 }
 class Stock: Codable{
     
-
+    static let didUpdate = Notification.Name(rawValue: "Stock.didUpdate")
     
     let name: String
     let code: String
@@ -40,6 +40,11 @@ class Stock: Codable{
         self.exchange = exchange
         self.amount = amount
     }
+    
+    var value: String {
+        return Formatters.price.string(from: NSNumber(value: price * Double(amount))) ?? ""
+    }
+    
     var priceText: String {
         return Formatters.price.string(from: NSNumber(value: price)) ?? ""
     }

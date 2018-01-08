@@ -34,7 +34,7 @@ class StocksViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-add"), style: .plain, target: self, action: #selector(newStock))
         
         stocksTableView.register(UINib(nibName: StockTableViewCell.reuseableIdentifier, bundle:nil), forCellReuseIdentifier: StockTableViewCell.reuseableIdentifier)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(saveStocks), name: Stock.didUpdate, object: nil)
         reloadStock()
     }
     
@@ -42,12 +42,17 @@ class StocksViewController: UIViewController {
         super.viewDidDisappear(animated)
         segmentedControl.selectedSegmentIndex = 1
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        stocksTableView.reloadData()
+    }
 }
 
 // MARK: Additional method
 
 extension StocksViewController  {
-    func saveStocks(){
+    @objc func saveStocks(){
         UserDefaults.standard.set(try? PropertyListEncoder().encode(stocks), forKey: "stocks")
         UserDefaults.standard.synchronize()
     }
