@@ -32,8 +32,9 @@ class StockViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
         amountField?.delegate = self
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
+//        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(endEditing)))
         title = stock.name
         tableView.hideBottomSeparator()
 
@@ -141,22 +142,22 @@ extension StockViewController: UITableViewDataSource{
                 
             }
         }else if indexPath.section == 1{
-            var cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseableIdentifier)
+            var cell:UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.reuseableIdentifier)
             if cell == nil {
                 cell =  UITableViewCell(style: .default, reuseIdentifier: UITableViewCell.reuseableIdentifier)
             }
             
-            cell?.textLabel?.font = .systemFont(ofSize: 15)
-            cell?.accessoryType = .disclosureIndicator
+            cell.textLabel?.font = .systemFont(ofSize: 15)
+            cell.accessoryType = .disclosureIndicator
             
             if indexPath.row == 0 {
-                cell?.textLabel?.text = "네이버 증권"
+                cell.textLabel?.text = "네이버 증권"
             }else if indexPath.row == 1 {
-                cell?.textLabel?.text = "다음 금융"
+                cell.textLabel?.text = "다음 금융"
             }else if indexPath.row == 2 {
-                cell?.textLabel?.text = "Bloomberg"
+                cell.textLabel?.text = "Bloomberg"
             }
-            return cell!
+            return cell
         }
         return UITableViewCell()
     }

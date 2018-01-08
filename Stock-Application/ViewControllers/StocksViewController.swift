@@ -15,6 +15,8 @@ class StocksViewController: UIViewController {
 
     @IBOutlet weak var stocksTableView: UITableView!
     
+    private var refreshControl = UIRefreshControl()
+    
     let segmentedControl = UISegmentedControl(items: ["그룹", "종목"])
     var stocks:[Stock] = []
     
@@ -36,6 +38,15 @@ class StocksViewController: UIViewController {
         stocksTableView.register(UINib(nibName: StockTableViewCell.reuseableIdentifier, bundle:nil), forCellReuseIdentifier: StockTableViewCell.reuseableIdentifier)
         NotificationCenter.default.addObserver(self, selector: #selector(saveStocks), name: Stock.didUpdate, object: nil)
         reloadStock()
+        
+        if #available(iOS 10.0, *) {
+            stocksTableView.refreshControl = refreshControl
+        } else {
+            stocksTableView.addSubview(refreshControl)
+        }
+        
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+//        refreshControl.attributedTitle = NSAttributedString(string: "Fetching New Stock Data ...")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -95,6 +106,8 @@ extension StocksViewController {
                 }
             })
         }
+        
+        self.refreshControl.endRefreshing()
     }
     
     @objc func newStock(){
