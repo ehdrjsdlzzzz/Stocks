@@ -32,11 +32,27 @@ class StocksViewController: UIViewController {
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-add"), style: .plain, target: self, action: #selector(newStock))
+        
+        stocksTableView.register(UINib(nibName: StockTableViewCell.reuseableIdentifier, bundle:nil), forCellReuseIdentifier: StockTableViewCell.reuseableIdentifier)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         segmentedControl.selectedSegmentIndex = 1
+    }
+}
+
+// MARK: Additional method
+
+extension StocksViewController  {
+    func saveStocks(){
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(stocks), forKey: "stocks")
+        UserDefaults.standard.synchronize()
+    }
+    func reloadStock(){
+        if let data = UserDefaults.standard.object(forKey: "stocks") as? Data {
+            stocks = try! PropertyListDecoder().decode([Stock].self, from: data)
+        }
     }
 }
 
@@ -65,7 +81,56 @@ extension StocksViewController {
             
             Alamofire.request(siteURL).responseString { (response) in
                 SVProgressHUD.dismiss()
-                print(response.result.value)
+                // Kanna로 파싱
+                guard let html = response.result.value else { return }
+                // HMTL -Kanna
+                guard let doc = try? HTML(html: html, encoding: .utf8) else { return }
+                
+                // 종목 이름
+                guard let titleElement = doc.at_css("#topWrap > div.topInfo > h2")  else {return}
+                guard let title = titleElement.content else {return} // 실질적인 값. 제목
+                // 종목 가격
+                guard let priceElement = doc.at_css("#topWrap > div.topInfo > ul.list_stockrate > li:nth-child(1) > em") else {return}
+                guard let priceString = priceElement.content else {return}
+                guard let price = Double(priceString.replacingOccurrences(of: ",", with: "")) else {return}
+                
+                // 종목 변동 사항
+                let priceKeep = priceElement.className?.hasSuffix("keep") == true
+                let priceUp = priceElement.className?.hasSuffix("up") == true
+                
+                // 가격 변동
+                let priceDiffString = doc.at_css("#topWrap > div.topInfo > ul.list_stockrate > li:nth-child(2) > span")?.content ?? ""
+                let priceDiff = Double(priceDiffString.replacingOccurrences(of: ",", with: "")) ?? 0
+                
+                // 변동률
+                var rateDiffString = doc.at_css("#topWrap > div.topInfo > ul.list_stockrate > li:nth-child(3) > span")?.content ?? ""
+                if rateDiffString.hasSuffix("％") || rateDiffString.hasSuffix("%") {
+                    rateDiffString = String(rateDiffString.dropLast())
+                }
+                if rateDiffString.hasPrefix("+") || rateDiffString.hasPrefix("-") {
+                    rateDiffString = String(rateDiffString.dropFirst())
+                }
+                let rateDiff = Double(rateDiffString.replacingOccurrences(of: ",", with: "")) ?? 0
+                
+                let exchange = doc.at_css("#topWrap > div.topInfo > ul.list_stockinfo > li:nth-child(2) > a")?.content
+                
+                let stock = Stock(name: title, code: code, price: price, isPriceUp: priceUp, isPriceKeep: priceKeep, priceDiff: priceDiff, rateDiff: rateDiff, exchange: exchange)
+                
+                stock.dayChartImageUrl = URL(string: doc.at_css("#stockGraphBody1")?["src"] ?? "")
+                stock.monthChartImageUrl = URL(string: doc.at_css("#stockGraphBody2")?["src"] ?? "")
+                stock.threeMonthsChartImageUrl = URL(string: doc.at_css("#stockGraphBody3")?["src"] ?? "")
+                stock.yearChartImageUrl = URL(string: doc.at_css("#stockGraphBody4")?["src"] ?? "")
+                stock.threeYearsChartImageUrl = URL(string: doc.at_css("#stockGraphBody5")?["src"] ?? "")
+                
+                self.stocks.append(stock)
+                self.saveStocks()
+                self.stocksTableView.reloadData()
+
+                // Chrome -> Inspector -> Copy Selector
+                // #topWrap > div.topInfo > h2 // 이름 셀렉터
+                // #topWrap > div.topInfo > ul.list_stockrate > li:nth-child(1) > em 가격 셀렉터
+                
+                // #topWrap > div.topInfo > ul.list_stockrate > li:nth-child(3) > span -> 변동률
             }
             
         }))
@@ -82,7 +147,12 @@ extension StocksViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: StockTableViewCell.reuseableIdentifier, for: indexPath) as! StockTableViewCell
+        
+        cell.stock = stocks[indexPath.row]
+        cell.accessoryType = .detailDisclosureButton
+        
+        return cell
     }
 }
 
@@ -90,6 +160,7 @@ extension StocksViewController: UITableViewDataSource {
 
 extension StocksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        // to Selected Stock ViewController
+        navigationController?.pushViewController(StockViewController(stock: stocks[indexPath.row]), animated: true)
     }
 }

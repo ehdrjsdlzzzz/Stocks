@@ -1,6 +1,16 @@
 import Foundation
 
-class Stock {
+class Formatters {
+    static let price: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal // Double 타입을 쉼표로 표현하기 위해
+        return formatter
+    }()
+}
+class Stock: Codable{
+    
+
+    
     let name: String
     let code: String
     var price: Double
@@ -29,5 +39,20 @@ class Stock {
         self.rateDiff = rateDiff
         self.exchange = exchange
         self.amount = amount
+    }
+    var priceText: String {
+        return Formatters.price.string(from: NSNumber(value: price)) ?? ""
+    }
+    
+    var priceDiffText: String {
+        let diffText = Formatters.price.string(from: NSNumber(value: priceDiff)) ?? ""
+        
+        if isPriceKeep {
+            return "0 +0.00%"
+        } else if isPriceUp {
+            return "▲ \(diffText) +\(rateDiff)%"
+        } else {
+            return "▼ \(diffText) -\(rateDiff)%"
+        }
     }
 }

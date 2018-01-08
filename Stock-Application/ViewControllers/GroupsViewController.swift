@@ -52,7 +52,6 @@ extension GroupsViewController {
     }
     func saveGroups(){
         UserDefaults.standard.set(try? PropertyListEncoder().encode(groups), forKey: "groups")
-        UserDefaults.standard.synchronize()
     }
     
     func reload(){
@@ -114,7 +113,7 @@ extension GroupsViewController: UITableViewDelegate {
         // 그룹 셀을 눌렀을 때 해당 그룹을 수정 or 삭제를 하는 화면(EditViewController)로 넘어가야 한다.
         let editVC = EditGroupViewController(group: groups[indexPath.row])
         
-        editVC.didSaveGroup = { group  in
+        editVC.didSaveGroup = { group in
             
             let isSameTitle = self.groups.filter({$0.title == group.title})
 
