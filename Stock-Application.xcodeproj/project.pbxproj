@@ -27,6 +27,8 @@
 		3E47B48F1FDAE5DD005C44AB /* NSObject+Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E47B48E1FDAE5DD005C44AB /* NSObject+Stock.swift */; };
 		3E762CCA1FE4B45200E732D6 /* StocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E762CC81FE4B45200E732D6 /* StocksViewController.swift */; };
 		3E762CCB1FE4B45200E732D6 /* StocksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E762CC91FE4B45200E732D6 /* StocksViewController.xib */; };
+		3E81D1152004C07700B57378 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81D1132004C07700B57378 /* GroupTableViewCell.swift */; };
+		3E81D1162004C07700B57378 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E81D1142004C07700B57378 /* GroupTableViewCell.xib */; };
 		3ED4A20B20032815006F5B3B /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A20920032815006F5B3B /* StockViewController.swift */; };
 		3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A20A20032815006F5B3B /* StockViewController.xib */; };
 		3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */; };
@@ -62,6 +64,8 @@
 		3E47B48E1FDAE5DD005C44AB /* NSObject+Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSObject+Stock.swift"; sourceTree = "<group>"; };
 		3E762CC81FE4B45200E732D6 /* StocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewController.swift; sourceTree = "<group>"; };
 		3E762CC91FE4B45200E732D6 /* StocksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StocksViewController.xib; sourceTree = "<group>"; };
+		3E81D1132004C07700B57378 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		3E81D1142004C07700B57378 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
 		3ED4A20920032815006F5B3B /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
 		3ED4A20A20032815006F5B3B /* StockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockViewController.xib; sourceTree = "<group>"; };
 		3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -109,6 +113,8 @@
 				3ED4A211200332D7006F5B3B /* StockChartTableViewCell.swift */,
 				3ED4A212200332D7006F5B3B /* StockChartTableViewCell.xib */,
 				3ED4A21B200385F1006F5B3B /* DeleteTableViewCell.swift */,
+				3E81D1132004C07700B57378 /* GroupTableViewCell.swift */,
+				3E81D1142004C07700B57378 /* GroupTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -273,6 +279,7 @@
 				3E47B48C1FDAE48C005C44AB /* TextFieldTableViewCell.xib in Resources */,
 				3E47B4881FDAE00B005C44AB /* EditGroupViewController.xib in Resources */,
 				3E47B4731FDAD9E9005C44AB /* Assets.xcassets in Resources */,
+				3E81D1162004C07700B57378 /* GroupTableViewCell.xib in Resources */,
 				3E762CCB1FE4B45200E732D6 /* StocksViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +364,7 @@
 				3ED4A21F20039242006F5B3B /* SelectGroupViewController.swift in Sources */,
 				3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */,
 				3ED4A21C200385F1006F5B3B /* DeleteTableViewCell.swift in Sources */,
+				3E81D1152004C07700B57378 /* GroupTableViewCell.swift in Sources */,
 				3E47B46C1FDAD9E9005C44AB /* AppDelegate.swift in Sources */,
 				3E3CFFF32004AFEA00651931 /* StockHeaderView.swift in Sources */,
 				3E369CEF1FDBE06000CD94E8 /* Stock.swift in Sources */,

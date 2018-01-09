@@ -80,7 +80,6 @@ extension EditGroupViewController {
                     return
                 }
             }
-            
         }else{
             let newGroup = Group(title: title, note: note)
             if (didSaveGroup?(newGroup))! == false{

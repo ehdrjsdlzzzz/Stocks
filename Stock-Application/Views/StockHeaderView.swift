@@ -20,6 +20,7 @@ class StockHeaderView: UITableViewHeaderFooterView {
         let background = UIView(frame: self.bounds)
         background.backgroundColor = .white
         backgroundView = background
+        
 
         titleLabel.textColor = .themeBlue
         Seperator.backgroundColor = .separator

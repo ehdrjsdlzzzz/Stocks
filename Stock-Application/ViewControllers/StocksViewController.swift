@@ -54,6 +54,7 @@ class StocksViewController: UIViewController {
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
         stocksTableView.hideBottomSeparator()
+        stocksTableView.separatorColor = .separator
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(refresh))
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-add"), style: .plain, target: self, action: #selector(newStock))

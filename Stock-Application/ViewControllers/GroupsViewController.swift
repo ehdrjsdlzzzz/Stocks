@@ -13,6 +13,7 @@ class GroupsViewController: UIViewController {
     @IBOutlet weak var groupTableView: UITableView!
     
     var groups: [Group] = []
+    var stocks: [Stock] = []
     let segmentedControl = UISegmentedControl(items: ["그룹", "종목"])
     
     override func viewDidLoad() {
@@ -30,6 +31,7 @@ class GroupsViewController: UIViewController {
         groupTableView.dataSource = self
         groupTableView.hideBottomSeparator()
         
+        groupTableView.register(UINib(nibName: GroupTableViewCell.reuseableIdentifier, bundle: nil), forCellReuseIdentifier: GroupTableViewCell.reuseableIdentifier)
         self.reload() // load data when view did load
     }
     
@@ -59,6 +61,10 @@ extension GroupsViewController {
             groups = try! PropertyListDecoder().decode([Group].self, from: data)
         }
         
+        guard let stocksData = UserDefaults.standard.object(forKey: "stocks") as? Data else {return}
+        guard let stocks = try? PropertyListDecoder().decode([Stock].self, from: stocksData) else {return}
+        
+        self.stocks = stocks
         groupTableView.reloadData()
     }
 }
@@ -98,9 +104,9 @@ extension GroupsViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = groups[indexPath.row].title
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: GroupTableViewCell.reuseableIdentifier, for: indexPath) as! GroupTableViewCell
+        cell.group = groups[indexPath.row]
+        cell.stocks = self.stocks.filter({$0.groupTitle == groups[indexPath.row].title})
         return cell
     }
 }
@@ -114,10 +120,9 @@ extension GroupsViewController: UITableViewDelegate {
         let editVC = EditGroupViewController(group: groups[indexPath.row])
         
         editVC.didSaveGroup = { group in
-            
             let isSameTitle = self.groups.filter({$0.title == group.title})
-
             if isSameTitle.count > 1{ // 1인 이유는 참조 값으로 넘어가면 본인의 이름도 같이 바뀌어 검사되어 카운트되기 때문이다.
+                
                 return false
             }
             self.saveGroups()
