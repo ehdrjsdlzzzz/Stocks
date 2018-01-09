@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E369CEF1FDBE06000CD94E8 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E369CEE1FDBE06000CD94E8 /* Stock.swift */; };
 		3E369CF11FDC06B200CD94E8 /* UITableView+Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E369CF01FDC06B200CD94E8 /* UITableView+Stock.swift */; };
+		3E3CFFF32004AFEA00651931 /* StockHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3CFFF22004AFEA00651931 /* StockHeaderView.swift */; };
+		3E3CFFF52004B00400651931 /* StockHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E3CFFF42004B00400651931 /* StockHeaderView.xib */; };
 		3E4630FE1FE61E4D000AF14D /* StockTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4630FC1FE61E4D000AF14D /* StockTableViewCell.swift */; };
 		3E4630FF1FE61E4D000AF14D /* StockTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E4630FD1FE61E4D000AF14D /* StockTableViewCell.xib */; };
 		3E4631011FE62290000AF14D /* UIColor + Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E4631001FE62290000AF14D /* UIColor + Swift.swift */; };
@@ -40,6 +42,8 @@
 /* Begin PBXFileReference section */
 		3E369CEE1FDBE06000CD94E8 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		3E369CF01FDC06B200CD94E8 /* UITableView+Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Stock.swift"; sourceTree = "<group>"; };
+		3E3CFFF22004AFEA00651931 /* StockHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockHeaderView.swift; sourceTree = "<group>"; };
+		3E3CFFF42004B00400651931 /* StockHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockHeaderView.xib; sourceTree = "<group>"; };
 		3E4630FC1FE61E4D000AF14D /* StockTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTableViewCell.swift; sourceTree = "<group>"; };
 		3E4630FD1FE61E4D000AF14D /* StockTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockTableViewCell.xib; sourceTree = "<group>"; };
 		3E4631001FE62290000AF14D /* UIColor + Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor + Swift.swift"; sourceTree = "<group>"; };
@@ -84,6 +88,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E3CFFF12004AFA500651931 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E3CFFF22004AFEA00651931 /* StockHeaderView.swift */,
+				3E3CFFF42004B00400651931 /* StockHeaderView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		3E4630FA1FE61E21000AF14D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +134,7 @@
 		3E47B46A1FDAD9E9005C44AB /* Stock-Application */ = {
 			isa = PBXGroup;
 			children = (
+				3E3CFFF12004AFA500651931 /* Views */,
 				3E4630FA1FE61E21000AF14D /* Cells */,
 				3E47B48D1FDAE5B1005C44AB /* Extension */,
 				3E47B4801FDADC35005C44AB /* ViewControllers */,
@@ -252,6 +266,7 @@
 				3E47B4761FDAD9E9005C44AB /* LaunchScreen.storyboard in Resources */,
 				3E47B4841FDADC4F005C44AB /* GroupsViewController.xib in Resources */,
 				3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */,
+				3E3CFFF52004B00400651931 /* StockHeaderView.xib in Resources */,
 				3ED4A210200329C7006F5B3B /* StockInfoTableViewCell.xib in Resources */,
 				3ED4A22020039242006F5B3B /* SelectGroupViewController.xib in Resources */,
 				3ED4A214200332D7006F5B3B /* StockChartTableViewCell.xib in Resources */,
@@ -343,6 +358,7 @@
 				3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */,
 				3ED4A21C200385F1006F5B3B /* DeleteTableViewCell.swift in Sources */,
 				3E47B46C1FDAD9E9005C44AB /* AppDelegate.swift in Sources */,
+				3E3CFFF32004AFEA00651931 /* StockHeaderView.swift in Sources */,
 				3E369CEF1FDBE06000CD94E8 /* Stock.swift in Sources */,
 				3ED4A20B20032815006F5B3B /* StockViewController.swift in Sources */,
 				3E4631011FE62290000AF14D /* UIColor + Swift.swift in Sources */,

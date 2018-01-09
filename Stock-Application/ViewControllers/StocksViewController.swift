@@ -11,6 +11,17 @@ import Alamofire
 import Kanna
 import SVProgressHUD
 
+// 그룹별로 종목을 묶어주기 위해
+class StockSection {
+    var group: Group?
+    var stocks: [Stock]
+    
+    init(group: Group?, stocks: [Stock]) {
+        self.group = group
+        self.stocks = stocks
+    }
+}
+
 class StocksViewController: UIViewController {
 
     @IBOutlet weak var stocksTableView: UITableView!
@@ -18,6 +29,9 @@ class StocksViewController: UIViewController {
     private var refreshControl = UIRefreshControl()
     
     let segmentedControl = UISegmentedControl(items: ["그룹", "종목"])
+    
+    var stockInSections: [StockSection] = []
+    
     var stocks:[Stock] = []
     
     override func viewDidLoad() {
@@ -45,6 +59,7 @@ class StocksViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "icons8-add"), style: .plain, target: self, action: #selector(newStock))
         
         stocksTableView.register(UINib(nibName: StockTableViewCell.reuseableIdentifier, bundle:nil), forCellReuseIdentifier: StockTableViewCell.reuseableIdentifier)
+        stocksTableView.register(UINib(nibName: StockHeaderView.reuseableIdentifier, bundle: nil), forHeaderFooterViewReuseIdentifier: StockHeaderView.reuseableIdentifier)
         NotificationCenter.default.addObserver(self, selector: #selector(saveStocks), name: Stock.didUpdate, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(deleteStock(_:)), name: Stock.didDelete, object: nil)
         reloadStock()
@@ -58,7 +73,7 @@ class StocksViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        stocksTableView.reloadData()
+        reloadStock()
     }
 }
 
@@ -67,12 +82,34 @@ class StocksViewController: UIViewController {
 extension StocksViewController  {
     @objc func saveStocks(){
         UserDefaults.standard.set(try? PropertyListEncoder().encode(stocks), forKey: "stocks")
-        UserDefaults.standard.synchronize()
+        reloadStock()
     }
     func reloadStock(){
-        if let data = UserDefaults.standard.object(forKey: "stocks") as? Data {
-            stocks = try! PropertyListDecoder().decode([Stock].self, from: data)
+        
+        guard let groups = AppDelegate.shared.groupsViewController?.groups  else {return}
+        guard let stockData = UserDefaults.standard.object(forKey: "stocks") as? Data else {return}
+        guard let stocks = try? PropertyListDecoder().decode([Stock].self, from: stockData) else {return}
+        self.stocks = stocks
+        
+        stockInSections.removeAll() // reload 될 때마다 추가될 것이니 이전의 값들을 지워준다.
+        
+        for group in groups {
+            let stockSection = StockSection(group: group, stocks: stocks.filter({$0.groupTitle == group.title})) // 전체 종목 중 그룹 이름이 같은 종목끼리 묶어 준다.
+            if stockSection.stocks.count > 0 {
+                stockInSections.append(stockSection)
+            }
         }
+        
+        let noGroupStock = stocks.filter({$0.groupTitle == nil})
+        if noGroupStock.count > 0 {
+            let noGroupsInSection = StockSection(group: nil, stocks: noGroupStock)
+            stockInSections.insert(noGroupsInSection, at: 0) // 그룹이 없는 종목들은 맨 위에
+        }
+        
+        // 1. reloadStock 안에서 테이블 뷰를 reload 해준다.
+        // 2. saveStocks 에서 reloadStock()을 호출해즘으로 종목읩 변화가 생기면 바로바로 StockInSections를 모두 갱신한다.
+        // 3. saveStocks -> reloadStock -> tableView.reloadData()를 해주니 삭제, 추가 에서 tableView.reloadData()를 해줄 필요가 없다.
+        stocksTableView.reloadData()
     }
     
     @objc func deleteStock(_ notification: Notification){
@@ -84,7 +121,6 @@ extension StocksViewController  {
             stocks.remove(at: index)
         }
         saveStocks()
-        stocksTableView.reloadData()
     }
 }
 
@@ -118,7 +154,6 @@ extension StocksViewController {
                     SVProgressHUD.dismiss()
                     self.refreshControl.endRefreshing()
                     self.saveStocks()
-                    self.stocksTableView.reloadData()
                 }
             })
         }
@@ -139,7 +174,6 @@ extension StocksViewController {
             self.parseStock(code: code, success: { (stock) in
                 self.stocks.append(stock)
                 self.saveStocks()
-                self.stocksTableView.reloadData()
             })
             
         }))
@@ -206,17 +240,32 @@ extension StocksViewController {
 // MARK: UITableViewDataSource
 
 extension StocksViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return stockInSections.count
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stocks.count
+        return stockInSections[section].stocks.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: StockTableViewCell.reuseableIdentifier, for: indexPath) as! StockTableViewCell
         
-        cell.stock = stocks[indexPath.row]
+        cell.stock = stockInSections[indexPath.section].stocks[indexPath.row]
         cell.accessoryType = .detailDisclosureButton
         
         return cell
+    }
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if stockInSections[section].group == nil {
+            return nil
+        }else {
+            let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: StockHeaderView.reuseableIdentifier) as! StockHeaderView
+            
+            view.titleLabel.text = stockInSections[section].group?.title
+            view.detailLabel.text = "\(stockInSections[section].stocks.count)종목"
+            
+            return view
+        }
     }
 }
 
@@ -226,6 +275,14 @@ extension StocksViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // to Selected Stock ViewController
         tableView.deselectRow(at: indexPath, animated: true)
-        navigationController?.pushViewController(StockViewController(stock: stocks[indexPath.row]), animated: true)
+        navigationController?.pushViewController(StockViewController(stock: stockInSections[indexPath.section].stocks[indexPath.row]), animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if stockInSections[section].group == nil {
+            return .leastNormalMagnitude
+        }
+        
+        return CGFloat(38)
     }
 }
