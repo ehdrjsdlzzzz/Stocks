@@ -29,6 +29,7 @@
 		3E762CCB1FE4B45200E732D6 /* StocksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E762CC91FE4B45200E732D6 /* StocksViewController.xib */; };
 		3E81D1152004C07700B57378 /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81D1132004C07700B57378 /* GroupTableViewCell.swift */; };
 		3E81D1162004C07700B57378 /* GroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3E81D1142004C07700B57378 /* GroupTableViewCell.xib */; };
+		3E9B65F320078544004F59FA /* Resource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B65F220078544004F59FA /* Resource.swift */; };
 		3ED4A20B20032815006F5B3B /* StockViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A20920032815006F5B3B /* StockViewController.swift */; };
 		3ED4A20C20032815006F5B3B /* StockViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3ED4A20A20032815006F5B3B /* StockViewController.xib */; };
 		3ED4A20F200329C7006F5B3B /* StockInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */; };
@@ -66,6 +67,7 @@
 		3E762CC91FE4B45200E732D6 /* StocksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StocksViewController.xib; sourceTree = "<group>"; };
 		3E81D1132004C07700B57378 /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
 		3E81D1142004C07700B57378 /* GroupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GroupTableViewCell.xib; sourceTree = "<group>"; };
+		3E9B65F220078544004F59FA /* Resource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resource.swift; sourceTree = "<group>"; };
 		3ED4A20920032815006F5B3B /* StockViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockViewController.swift; sourceTree = "<group>"; };
 		3ED4A20A20032815006F5B3B /* StockViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StockViewController.xib; sourceTree = "<group>"; };
 		3ED4A20D200329C7006F5B3B /* StockInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockInfoTableViewCell.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 		3E47B46A1FDAD9E9005C44AB /* Stock-Application */ = {
 			isa = PBXGroup;
 			children = (
+				3E9B65F12007850D004F59FA /* Resource */,
 				3E3CFFF12004AFA500651931 /* Views */,
 				3E4630FA1FE61E21000AF14D /* Cells */,
 				3E47B48D1FDAE5B1005C44AB /* Extension */,
@@ -187,6 +190,14 @@
 				3E4631001FE62290000AF14D /* UIColor + Swift.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		3E9B65F12007850D004F59FA /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				3E9B65F220078544004F59FA /* Resource.swift */,
+			);
+			path = Resource;
 			sourceTree = "<group>";
 		};
 		654D0579D2E7757AF2E4C01F /* Frameworks */ = {
@@ -367,6 +378,7 @@
 				3E81D1152004C07700B57378 /* GroupTableViewCell.swift in Sources */,
 				3E47B46C1FDAD9E9005C44AB /* AppDelegate.swift in Sources */,
 				3E3CFFF32004AFEA00651931 /* StockHeaderView.swift in Sources */,
+				3E9B65F320078544004F59FA /* Resource.swift in Sources */,
 				3E369CEF1FDBE06000CD94E8 /* Stock.swift in Sources */,
 				3ED4A20B20032815006F5B3B /* StockViewController.swift in Sources */,
 				3E4631011FE62290000AF14D /* UIColor + Swift.swift in Sources */,

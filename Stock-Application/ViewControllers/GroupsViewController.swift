@@ -39,6 +39,11 @@ class GroupsViewController: UIViewController {
         super.viewDidDisappear(animated)
         segmentedControl.selectedSegmentIndex = 0
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        reload()
+    }
 }
 
 // MARk: Function about data
