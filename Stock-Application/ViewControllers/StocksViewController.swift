@@ -50,6 +50,7 @@ class StocksViewController: UIViewController {
         }
         
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Refreshing")
         
         stocksTableView.delegate = self
         stocksTableView.dataSource = self
